@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wildfire Prediction</title>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='fonts/material-icon/css/material-design-iconic-font.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='vendor/jquery-ui/jquery-ui.min.css')}}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="main">
+        
+        <div class="header">
+            <img src="{{ url_for('static', filename = 'images/header-text.png')}}" alt="">
+            <h1> Wildfire Detection & Prediction</h1>
+            <p class="subtitle">
+AI-powered system to detect wildfire risk and predict future fire intensity in real-time
+</p>
+            <img src="{{ url_for('static', filename = 'images/dots.png')}}" alt="">
+        </div>
+        <!-- Classification Form -->
+        <div class="container">
+            <h3>🔥 Wildfire Detection (Current Risk)</h3>
+            
+            <form action="{{ url_for('predict')}}" id="booking-form" class="booking-form" method="POST">
+                <div class="form-group">
+                    <div class="form-Temperature">
+                        <label for="Temperature">Temperature</label>
+                        <input type="number" id="Temperature" name="Temperature" placeholder="Temperature" />
+                    </div>
+                    <div class="form-Ws">
+                        <label for="Ws">WindSpeed</label>
+                        <input type="number" id="Ws" name="Ws" placeholder="Wind speed" />
+                    </div>
+                    <div class="form-FFMC">
+                        <label for="FFMC"> Fuel Moisture Code </label>
+                        <input type="number" id="FFMC" name="FFMC" placeholder="FFMC" />
+                    </div>
+                    <div class="form-DMC">
+                        <label for="DMC">Duff Moisture Code</label>
+                        <input type="number" id="DMC" name="DMC" placeholder="DMC" />
+                    </div>
+                    <div class="form-ISI">
+                        <label for="ISI">Initial Spread Index </label>
+                        <input type="number" id="ISI" name="ISI" placeholder="ISI" />
+                    </div>
+                    <div class="form-submit">
+                        <input type="submit" id="submit" class="submit" value="Predict" />
+                    </div>
+                </div>
+                {% if prediction_text1 %}
+    {% if "Safe" in prediction_text1 %}
+        <h2 style="color: green; font-weight: bold;">
+            {{ prediction_text1 }}
+        </h2>
+    {% else %}
+        <h2 style="color: red; font-weight: bold;">
+            {{ prediction_text1 }}
+        </h2>
+    {% endif %}
+     <p class="confidence" style="text-align:center; color:#00e6e6; font-weight:600;">
+    🤖 AI Confidence: {{ confidence }}%
+</p>
+<p style="text-align:center; margin-top:10px;">🔥 Risk Visualization</p>
+<div class="risk-bar">
+    <div class="risk-fill {{ risk_level }}"></div>
+</div>
+{% endif %}
+</h2>
+            </form>
+        </div>
+
+        <!-- Regression Form -->
+        <div class="container">
+<h3>📊 Wildfire Prediction (Future Risk Index)</h3>
+            <form action="{{ url_for('predictR')}}" id="Reg_form" class="booking-form" method="POST">
+                <div class="form-group">
+                    <div>
+                        <label for="Temperature1">Temperature</label>
+                        <input type="text" id="Temperature1" name="Temperature" placeholder="Temperature" />
+                    </div>
+                    <div>
+                        <label for="Wind_speed">Windspeed</label>
+                        <input type="text" id="Wind_speed" name="Ws" placeholder="Wind speed" />
+                    </div>
+                    <div>
+                        <label for="FFMC1">Fuel Moisture Code</label>
+                        <input type="text" id="FFMC1" name="FFMC" placeholder="FFMC" />
+                    </div>
+                    <div>
+                        <label for="DMC1">Duff Moisture Code</label>
+                        <input type="text" id="DMC1" name="DMC" placeholder="DMC" />
+                    </div>
+                    <div>
+                        <label for="ISI1">Initial Spread Index</label>
+                        <input type="text" id="ISI1" name="ISI" placeholder="ISI" />
+                    </div>
+                    <div class="form-submit">
+                        <input type="submit" id="submitR" class="submit" value="Predict" />
+                    </div>
+                </div>
+                {% if prediction_text2 %}
+    {% if "Warning" in prediction_text2 %}
+        <h2 style="color: red; font-weight: bold;">
+            {{ prediction_text2 }}
+        </h2>
+    {% else %}
+        <h2 style="color: green; font-weight: bold;">
+            {{ prediction_text2 }}
+        </h2>
+    {% endif %}
+{% endif %}
+            </form>
+        </div>
+
+    </div>
+        <!-- Features Section -->
+    <div class="features">
+        <p>✔ Uses Machine Learning models for wildfire classification</p>
+        <p>✔ Predicts fire intensity using regression analysis</p>
+        <p>✔ Sends real-time SMS alerts in high-risk situations</p>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <p>Developed using Machine Learning | Flask | Twilio Alerts</p>
+    </footer>
+
+</div>  <!-- THIS closes .main -->
+</body>
+</html>
